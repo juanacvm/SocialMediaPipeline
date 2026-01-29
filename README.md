@@ -1,63 +1,51 @@
-# Pandas - Proyecto ETL en JSON Placeholder
+# Pipeline ETL para la carga de JSONPlaceholder con Pandas y SQLAlchemy
 
-Proyecto pipeline ETL que consume datos de la API JSONPlaceholder y que, mediante un proceso de transformación gracias a pandas, se carga a SQL haciendo uso de la librería SQLAlchemy.
+## Descripción
 
-## 📋 Descripción
+Proyecto que implementa un pipeline que cumple con los estándares ETL utilizando Python. Consume datos de una API, transforma y normaliza los datos mediante pandas y los guarda en SQL mediante SQLAlchemy.
 
-El presente proyecto cumple con el procedimiento de:
-Extraer los datos de la API Json Placeholder
-Transformar los datos mediante pandas
-Cargar los datos empleando SQLAlchemy
+## Características
 
-- Usuarios (Users)
-- Tareas (Todos)
-- Publicaciones (Posts)
-- Comentarios (Comments)
-- Álbumes (Albums)
-- Fotos (Photos)
+- **Separación de responsabilidades:** Asignación de métodos a distintos archivos para separar la lógica del proceso ETL y tener un mejor mantenimiento del código.
 
+- **Extracción eficiente:** Consumo de API mediante requests y manejo de `.env` para controlar errores ante caídas de red.
 
-## 🏗️ Estructura
+- **Seguridad:** Gestión de credenciales mediante variables de entorno `.env` para evitar el hardcodeo de información sensible en el código fuente.
+
+- **Integración robusta a SQL:** Manejo de SQLAlchemy ORM para la creación y gestión de tablas SQL.
+
+## Arquitectura del Pipeline
+
+El pipeline sigue el procedimiento ETL estándar:
 
 ```
-src/
-├── config.py       # Carga las variables de entorno
-├── database.py     # Establece la conexión SQL
-├── models.py       # Genera los modelos ORM
-├── etl_logic.py    # Extracción y transformación de datos
-└── main.py         # Pipeline principal de ejecución del proyecto
+Conexión con API JSONPlaceholder → Extracción → Transformación → Carga (SQL Server)
 ```
 
-## 🛠️ Requisitos
+## Tecnologías Utilizadas
 
-- Python 3.8+
-- SQL Server + ODBC Driver 17
+- **Python 3.8+**
+- **Pandas**: Para carga, limpieza y transformación de datos
+- **SQLAlchemy**: Para la gestión de base de datos (ORM)
+- **Requests**: Para consumir APIs.
+- **Python-dotenv**: Para la configuración de entorno
+- **SQL Server**: Para la gestión de base de datos relacionales
 
-## 📦 Instalación
+## Estructura del Proyecto
 
-1. Modifica `.env.example` a `.env` y completa las credenciales:
-```env
-DB_DRIVER=Tu_sql_driver, puede ser: ODBC Driver 17 for SQL Server
-DB_SERVER=tu_servidor
-DB_NAME=base_datos_destino
-DB_USER=usuario
-DB_PASSWORD=contraseña
+```
+PandasPracticeRequests/
+├── src/
+│   ├── main.py                         # Script que ejecuta pipeline
+│   ├── config.py                       # Configuración de variables de entorno
+│   ├── database.py                     # Conexión a la BD
+│   ├── models.py                       # Modelos ORM de tablas
+│   └── etl_logic.py                    # Lógica ETL (Carga de API y transformación)
+├── requirements.txt                    # Archivo para instalar librerías Python
+└── README.md                           # Este archivo
 ```
 
-2. Instala dependencias:
-```bash
-pip install -r requirements.txt
-```
-
-## 🚀 Uso
-
-```bash
-python src/main.py
-```
-
-Crea/recrea las tablas y carga datos desde JSONPlaceholder.
-
-## 📊 Tablas
+## Tablas implementadas
 
 | Tabla | Descripción |
 |-------|-------------|
@@ -65,10 +53,43 @@ Crea/recrea las tablas y carga datos desde JSONPlaceholder.
 | Todos | Tareas registradas por el usuario, ya sea completada o no |
 | Posts | Publicaciones registradas por los usuarios |
 | Comments | Comentarios de cada post |
-| Albums | Álbumes de fotos levantadas por los usuarios|
+| Albums | Álbumes de fotos levantadas por los usuarios |
 | Photos | Fotos con enlace URLs hacia ellas |
 
-## ⚠️ Importante
+## Prerequisitos
 
-- Las tablas se recrean cada ejecución
-- Requiere conexión a internet para conectarse y extraer datos de JSONPlaceholder
+- Python 3.11 o superior
+- SQL Server 2019 o superior instalado
+- Git para clonar el repositorio
+- Pip (Gestor de paquetes de Python)
+- Conexión a internet para acceder a JSONPlaceholder API
+
+## Configuración e Instalación
+
+### Instalación:
+
+1. **Clona el repositorio**
+```bash
+git clone https://github.com/juanacvm/socialmedia-pipeline.git
+cd socialmedia-pipeline-main
+```
+
+
+2. **Instalar dependencias:**
+```bash
+pip install -r requirements.txt
+```
+
+3. **Configurar variables de entorno (reemplazar `.env.example` por `.env`):**
+```env
+DB_DRIVER=ODBC Driver 17 for SQL Server
+DB_SERVER=tu_servidor
+DB_NAME=nombre_base_datos
+DB_USER=usuario
+DB_PASSWORD=contraseña
+```
+
+4. **Ejecutar el pipeline:**
+```bash
+python src/main.py
+```
