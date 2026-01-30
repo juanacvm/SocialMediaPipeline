@@ -1,4 +1,4 @@
-# Pipeline ETL para la carga de JSONPlaceholder con Pandas y SQLAlchemy
+# Pipeline ETL para la carga JSON con Pandas y SQLAlchemy
 
 ## Descripción
 
@@ -6,20 +6,20 @@ Proyecto que implementa un pipeline que cumple con los estándares ETL utilizand
 
 ## Características
 
-- **Separación de responsabilidades:** Asignación de métodos a distintos archivos para separar la lógica del proceso ETL y tener un mejor mantenimiento del código.
+- **Separación de funciones:** Asignación de métodos a distintos archivos para separar la lógica de la conexión a la base de datos, modelamiento de tablas y proceso ETL con el objetivo de tener un mejor mantenimiento del código.
 
-- **Extracción eficiente:** Consumo de API mediante requests y manejo de `.env` para controlar errores ante caídas de red.
+- **Extracción segura:** Consumo de API mediante requests y manejo de `.raise_for_status` para lanzar excepciones caso error de red.
 
 - **Seguridad:** Gestión de credenciales mediante variables de entorno `.env` para evitar el hardcodeo de información sensible en el código fuente.
 
-- **Integración robusta a SQL:** Manejo de SQLAlchemy ORM para la creación y gestión de tablas SQL.
+- **Integración SQL:** Manejo de SQLAlchemy ORM para la creación y gestión de tablas SQL.
 
 ## Arquitectura del Pipeline
 
 El pipeline sigue el procedimiento ETL estándar:
 
 ```
-Conexión con API JSONPlaceholder → Extracción → Transformación → Carga (SQL Server)
+Conexión con API JSONPlaceholder → Extracción JSON → Transformación → Carga (SQL Server)
 ```
 
 ## Tecnologías Utilizadas
@@ -50,11 +50,11 @@ PandasPracticeRequests/
 | Tabla | Descripción |
 |-------|-------------|
 | Users | Usuarios registrados |
-| Todos | Tareas registradas por el usuario, ya sea completada o no |
+| Todos | Tareas de los usuarios (completadas o no)|
 | Posts | Publicaciones registradas por los usuarios |
 | Comments | Comentarios de cada post |
-| Albums | Álbumes de fotos levantadas por los usuarios |
-| Photos | Fotos con enlace URLs hacia ellas |
+| Albums | Álbumes de fotos cargadas por los usuarios |
+| Photos | Carrusel de fotos de los álbumes |
 
 ## Prerequisitos
 
